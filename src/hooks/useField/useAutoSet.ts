@@ -8,35 +8,39 @@ const valueOutOfSync = ({ value, prevValue }: FieldComm): boolean => {
 }
 
 const useAutoSet = (name: string, comm: FieldCommRef, setValue: FieldSetValue, field: Field, form: UseFormReturn): void => {
+  const current = comm.current
+  const currentValue = current.value
+  const requestRerun = current.requestRerun
+  const registered = field.registered
   useEffect(() => {
     let shouldAutoSet = false
 
     /*
      * check for out of sync value
      */
-    if (valueOutOfSync(comm.current)) {
+    if (valueOutOfSync(current)) {
       shouldAutoSet = true
     }
 
     /*
      * check if a rerun was requested by the pre-validation in shouldUpdate
      */
-    if (comm.current.requestRerun) {
+    if (requestRerun) {
       shouldAutoSet = true
-      comm.current.requestRerun = false
+      current.requestRerun = false
     }
 
     /*
      * check if the field has been registered
      */
-    if (!field.registered) {
+    if (!registered) {
       shouldAutoSet = true
     }
 
     if (shouldAutoSet) {
-      setValue(comm.current.value, undefined)
+      setValue(current.value, undefined)
     }
-  })
+  }, [comm, current, currentValue, requestRerun, registered])
 }
 
 export default useAutoSet
