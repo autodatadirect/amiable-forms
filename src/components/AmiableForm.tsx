@@ -7,8 +7,10 @@ import buildSubmitHandlers from '../util/buildSubmitHandlers'
 export const formContext = createContext<AmiableFormStateRef | undefined>(undefined)
 
 const useSetInitialValues = (initialValues: Values | undefined, setValues: SetValuesDispatcher): void => {
+  const initRef = useRef(true)
   useEffect(() => {
-    if (initialValues !== undefined) {
+    if (initialValues !== undefined && initRef.current) {
+      initRef.current = false
       setValues(initialValues, undefined)
     }
   }, [initialValues, setValues])
