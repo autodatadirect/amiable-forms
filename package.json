@@ -7,6 +7,7 @@
     "build": "tsc",
     "dev": "tsc -w",
     "lint": "ts-standard",
+    "lint-fix": "ts-standard --fix",
     "test": "jest --watch",
     "syncVersion": "node syncVersion.js"
   },

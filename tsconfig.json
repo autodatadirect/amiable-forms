@@ -10,7 +10,8 @@
     "strictNullChecks": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "declaration": true
   },
   "include": ["./src/**/*"]
 }
