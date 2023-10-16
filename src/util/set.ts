@@ -1,6 +1,6 @@
 const PATH_SEPARATOR = /[^.[\]]+/g
 
-const isNotObject = (o: any): boolean => Object(o) !== o
+const isObject = (o: any): o is object => Object(o) === o
 
 const isArrayIndexable = (s: any): boolean => Math.abs(s) >> 0 === +s
 
@@ -8,7 +8,7 @@ const seedObject = (nextPathPart: string): any => isArrayIndexable(nextPathPart)
 
 const set = (obj: any, path: string, value: any): any => {
   if (path === null || path === undefined) return obj
-  if (isNotObject(obj)) return obj
+  if (!isObject(obj)) return obj
   const aPath = path.match(PATH_SEPARATOR) ?? []
   const max = aPath.length - 1
 
@@ -22,7 +22,7 @@ const set = (obj: any, path: string, value: any): any => {
     // mutate cloned branch
     if (i === max) {
       branchClone[pathPart] = value
-    } else if (isNotObject(branchClone[pathPart])) {
+    } else if (!isObject(branchClone[pathPart])) {
       branchClone[pathPart] = seedObject(aPath[i + 1])
     }
 
@@ -40,7 +40,7 @@ const set = (obj: any, path: string, value: any): any => {
     return branchClone[pathPart]
   }
 
-  aPath.reduce(reduceObjectBranch, obj)
+  aPath.reduce(reduceObjectBranch as any, obj as never)
 
   return clone
 }
