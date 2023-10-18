@@ -2,15 +2,17 @@
   "compilerOptions": {
     "outDir": "./dist",
     "allowJs": false,
-    "target": "es5",
+    "target": "es2017",
     "module": "es2015",
     "jsx": "react",
+    "types": ["jest"],
     "incremental": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "declaration": true
   },
   "include": ["./src/**/*"]
 }
